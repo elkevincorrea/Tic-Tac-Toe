@@ -36,6 +36,5 @@ class Tic_Tac_Toe_Res(Resource):
         args = parser.parse_args()
         matrix = str_board_to_matrix(args.board)
         tic_tac = models.Tic_Tac_Toe(matrix, args.player)
-        succesors = tic_tac.sucessors()
-        return {'board': [[0, 0, 0], [0, 0, 0]], \
-        'succesors': json.dumps([ob.__dict__ for ob in succesors])}
+        res, next_step = minimax.get_next_step(tic_tac)
+        return {'board': next_step.board, 'winner': next_step.winner()}

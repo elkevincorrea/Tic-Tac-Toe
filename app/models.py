@@ -2,15 +2,18 @@ from app.minimax import Minimax_State
 from copy import deepcopy
 
 class Tic_Tac_Toe(Minimax_State):
-    PLAYER_O = 1
-    PLAYER_X = 2
+    PLAYER_O = Minimax_State.PLAYER_1
+    PLAYER_X = Minimax_State.PLAYER_2
     def __init__(self, board, player):
         self.board = board
         self.player = player
 
+    def get_player(self):
+        return self.player
+
     def full_board(self):
         for row in self.board:
-            for n in self.board[row]:
+            for n in row:
                 if n == 0:
                     return False
         return True
@@ -18,17 +21,17 @@ class Tic_Tac_Toe(Minimax_State):
     def winner(self):
         for row in self.board:
             if (row[0] == Tic_Tac_Toe.PLAYER_O and \
-                    row[1] == Tic_Tac_Toe.PLAYER_O and row[2] == Tic_Tac_Toe.PLAYER_O) or \
-                    (row[0] == Tic_Tac_Toe.PLAYER_X and row[1] == Tic_Tac_Toe.PLAYER_X and \
-                     row[2] == Tic_Tac_Toe.PLAYER_X):
+                row[1] == Tic_Tac_Toe.PLAYER_O and row[2] == Tic_Tac_Toe.PLAYER_O) or \
+                (row[0] == Tic_Tac_Toe.PLAYER_X and row[1] == Tic_Tac_Toe.PLAYER_X and \
+                row[2] == Tic_Tac_Toe.PLAYER_X):
                 return row[0]
         for j in range(len(self.board[0])):
             if (self.board[0][j] == Tic_Tac_Toe.PLAYER_O and \
-                    self.board[1][j] == Tic_Tac_Toe.PLAYER_O and \
-                    self.board[2][j] == Tic_Tac_Toe.PLAYER_O) or \
-                    (self.board[0][j] == Tic_Tac_Toe.PLAYER_O and \
-                    self.board[1][j] == Tic_Tac_Toe.PLAYER_O and \
-                    self.board[2][j] == Tic_Tac_Toe.PLAYER_O):
+                self.board[1][j] == Tic_Tac_Toe.PLAYER_O and \
+                self.board[2][j] == Tic_Tac_Toe.PLAYER_O) or \
+                (self.board[0][j] == Tic_Tac_Toe.PLAYER_X and \
+                self.board[1][j] == Tic_Tac_Toe.PLAYER_X and \
+                self.board[2][j] == Tic_Tac_Toe.PLAYER_X):
                 return self.board[0][j]
         player_o_count = 0
         player_x_count = 0
@@ -41,7 +44,8 @@ class Tic_Tac_Toe(Minimax_State):
             return Tic_Tac_Toe.PLAYER_O
         elif player_x_count == 3:
             return Tic_Tac_Toe.PLAYER_X
-
+        player_o_count = 0
+        player_x_count = 0
         for i in range(len(self.board)):
             if self.board[i][2 - i] == Tic_Tac_Toe.PLAYER_O:
                 player_o_count += 1
@@ -56,7 +60,7 @@ class Tic_Tac_Toe(Minimax_State):
     def utility(self):
         player_winner = self.winner()
         if player_winner:
-            if player_winner == self.player:
+            if player_winner == Tic_Tac_Toe.PLAYER_O:
                 return 1
             else:
                 return -1
