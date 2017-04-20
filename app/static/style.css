@@ -1,0 +1,17 @@
+.cell{
+    min-height: 75px;
+    border: 5px solid black;
+}
+
+.cell-wrap{
+    width: 100%;
+    min-height: 65px;
+}
+
+body{
+    background-image: url('/static/img/background.jpg');
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    padding-top: 50px;
+}
